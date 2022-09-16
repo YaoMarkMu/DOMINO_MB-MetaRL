@@ -7,7 +7,7 @@ from domino.envs.normalized_env import normalize
 from domino.utils.utils import ClassEncoder
 from domino.samplers.model_sample_processor import ModelSampleProcessor
 from domino.envs.config import get_environment_config
-
+import pandas
 from tensorboardX import SummaryWriter
 import json
 import os
