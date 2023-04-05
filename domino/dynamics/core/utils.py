@@ -732,13 +732,19 @@ def create_ensemble_multiheaded_context_predictor(
 
             output_head = head_layer(xx)
             cons_head = cons_head_infer(online_ori_fea)
-            #cons_head = head_layer(online_ori_fea)
             output=tf.concat([tf.expand_dims(output_head,0), tf.expand_dims(cons_head[0],0), tf.expand_dims(cons_head[1],0)], 0)
 
-            # print(output_head.shape)
-            # print(cons_head.shape)
-            # print(.shape)
-
+            # In the T-MCL code base,
+            #to align the dimensions of the subsequent code,
+            #the encoding output of the network is copied three times.
+            #This is a clever engineering technique to avoid bugs caused by misaligned dimensions.
+            #When the number of disentangled contexts is less than the head_size,
+            #similar to T-MCL, we concatenate the output_head's output here for easy dimension alignment.
+            #Of course, there are other solutions, such as copying another disentangled context to align the dimensions.
+            #We adopt this approach in the open-source code mainly because
+            #although the dynamics parameters cannot be clearly distinguished in the output_head,
+            #it still contains historical information encoding of multiple time steps,
+            #which is useful information for control and will not have a negative impact on the control effect.
             # output = tf.compat.v1.tile(
             #     tf.compat.v1.reshape(output_head, [1, ensemble_size, -1, cp_output_dim]),
             #     [head_size, 1, 1, 1],
