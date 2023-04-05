@@ -788,6 +788,11 @@ def create_ensemble_multiheaded_context_predictor(
                 contrastive_loss = contrastive_loss + cons_loss
             return contrastive_loss
 
+        # This implementation of Infonce is based on a feature of our codebase T-MCL, 
+        # which employs a data sampler to 
+        # provide each ensemble model with data sampled from different dynamics parameters obtained by undersampling data from distinct episodes. 
+        # Moreover, when constructing a batch of data for the same model, trajectory segments generated under the same dynamics parameters are selected.
+        # Consequently, this implementation is currently a more convenient approach to constructing batches of data for contrastive learning.
         def infer_info_nce_C(ori_fea,online_ori_fea):
             shuffle_batch_fea = tf.transpose(ori_fea, perm=[1, 0, 2])
             shuffle_batch_fea = tf.transpose(tf.random.shuffle(shuffle_batch_fea), perm=[1, 0, 2])

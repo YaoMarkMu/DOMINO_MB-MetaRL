@@ -27,4 +27,6 @@ Train and evaluate agents:
 python -m run_scripts.run_domino --dataset [hopper,ant,halfcheetah,cripple_ant,cripple_halfcheetah] --normalize_flag
 ```
 
+## Some Notes
 
+The code in the repository is an TF2.0 version based on CADM and TMCL, which were written in TensorFlow 1.0. I upgraded the code from TF1.0 to TF2.0 due to the poor operability of the TF1.0 code. I suggest reviewing the source code of CADM and TMCL, as well as my implementation of the TF2.0 version of T-MCL, which can be found at https://github.com/YaoMarkMu/TF2.0-Trajectory-MCL. These resources should aid in your understanding and implementation of the code.
